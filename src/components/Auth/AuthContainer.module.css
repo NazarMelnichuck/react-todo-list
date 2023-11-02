@@ -1,0 +1,47 @@
+.auth{
+    display: flex;
+    flex-direction: column;
+    margin: 0 30px;
+    background-color: #fff;
+    box-shadow: 0 0 20px 0 #00000017;
+    width: 500px;
+    border-radius: 10px;
+    padding: 30px;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+}
+
+.label{
+    margin-bottom: 15px;
+}
+
+.labelText{
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.userInfo{
+    margin-bottom: 20px;
+}
+
+.infoBlock{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.infoItem{
+    font-size: 26px;
+    margin-right: 5px;
+}
+
+.infoValue{
+    font-size: 20px;
+}
+
+.button:hover{
+    background-color: #ffcaca;
+}

@@ -1,38 +1,300 @@
-.App {
-  text-align: center;
+/* Указываем box sizing */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+ul{
+	list-style: none;
+	padding: 0;
+	margin: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Убираем внешние отступы */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+ul[class],
+ol[class],
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
+	margin: 0;
+	padding: 0;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+/* Выставляем основные настройки по-умолчанию для body */
+body {
+	min-height: 100vh;
+	scroll-behavior: smooth;
+	text-rendering: optimizeSpeed;
+	line-height: 1.5;
+	background: #e7e7e7;
 }
 
-.App-link {
-  color: #61dafb;
+/* Удаляем стандартную стилизацию для всех ul и il, у которых есть атрибут class*/
+ul[class],
+ol[class] {
+	list-style: none;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Элементы a, у которых нет класса, сбрасываем до дефолтных стилей */
+a:not([class]) {
+	text-decoration-skip-ink: auto;
+}
+
+/* Упрощаем работу с изображениями */
+img {
+	max-width: 100%;
+	display: block;
+}
+
+/* Указываем понятную периодичность в потоке данных у article*/
+article > * + * {
+	margin-top: 1em;
+}
+
+/* Наследуем шрифты для инпутов и кнопок */
+input,
+button,
+textarea,
+select {
+	font: inherit;
+}
+
+/* Удаляем все анимации и переходы для людей, которые предпочитай их не использовать */
+@media (prefers-reduced-motion: reduce) {
+	* {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+}
+
+/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
+html {
+	line-height: 1.15;
+	-webkit-text-size-adjust: 100%;
+}
+body {
+	margin: 0;
+}
+main {
+	display: block;
+}
+hr {
+	box-sizing: content-box;
+	height: 0;
+	overflow: visible;
+}
+pre {
+	font-family: monospace, monospace;
+	font-size: 1em;
+}
+a {
+	background-color: transparent;
+}
+abbr[title] {
+	border-bottom: none;
+	text-decoration: underline;
+	text-decoration: underline dotted;
+}
+b,
+strong {
+	font-weight: bolder;
+}
+code,
+kbd,
+samp {
+	font-family: monospace, monospace;
+	font-size: 1em;
+}
+small {
+	font-size: 80%;
+}
+sub,
+sup {
+	font-size: 75%;
+	line-height: 0;
+	position: relative;
+	vertical-align: baseline;
+}
+sub {
+	bottom: -0.25em;
+}
+sup {
+	top: -0.5em;
+}
+img {
+	border-style: none;
+}
+button,
+input,
+optgroup,
+select,
+textarea {
+	font-family: inherit;
+	font-size: 100%;
+	line-height: 1.15;
+	margin: 0;
+}
+button,
+input {
+	overflow: visible;
+}
+button,
+select {
+	text-transform: none;
+}
+button,
+[type='button'],
+[type='reset'],
+[type='submit'] {
+	-webkit-appearance: button;
+}
+button::-moz-focus-inner,
+[type='button']::-moz-focus-inner,
+[type='reset']::-moz-focus-inner,
+[type='submit']::-moz-focus-inner {
+	border-style: none;
+	padding: 0;
+}
+button:-moz-focusring,
+[type='button']:-moz-focusring,
+[type='reset']:-moz-focusring,
+[type='submit']:-moz-focusring {
+	outline: 1px dotted ButtonText;
+}
+fieldset {
+	padding: 0.35em 0.75em 0.625em;
+}
+legend {
+	box-sizing: border-box;
+	color: inherit;
+	display: table;
+	max-width: 100%;
+	padding: 0;
+	white-space: normal;
+}
+progress {
+	vertical-align: baseline;
+}
+textarea {
+	overflow: auto;
+}
+[type='checkbox'],
+[type='radio'] {
+	box-sizing: border-box;
+	padding: 0;
+}
+[type='number']::-webkit-inner-spin-button,
+[type='number']::-webkit-outer-spin-button {
+	height: auto;
+}
+[type='search'] {
+	-webkit-appearance: textfield;
+	outline-offset: -2px;
+}
+[type='search']::-webkit-search-decoration {
+	-webkit-appearance: none;
+}
+::-webkit-file-upload-button {
+	-webkit-appearance: button;
+	font: inherit;
+}
+details {
+	display: block;
+}
+summary {
+	display: list-item;
+}
+template {
+	display: none;
+}
+[hidden] {
+	display: none;
+}
+
+/* ============================ */
+
+.App{
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	position: relative;
+	height: 100vh;
+	padding: 50px 0;
+}
+
+.locked{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	width: calc(100% - 15px);
+	height: 100%;
+	border-radius: 10px;
+	/*box-shadow: 0 0 20px 0 #00000017;*/
+	background: rgba(255, 255, 255, 0.56);
+	backdrop-filter: blur(3px);
+}
+
+.locked h1{
+	font-size: 42px;
+}
+
+.container {
+	display: flex;
+	flex-direction: row;
+	gap: 30px;
+	max-width: 1000px;
+	width: 100%;
+	height: 100%;
+	margin: 0 0 0 auto;
+	padding: 0 0 0 15px;
+	position: relative;
+}
+
+.task-list {
+	display: flex;
+	flex-direction: column;
+}
+
+.block-title{
+	font-size: 36px;
+	margin-bottom: 20px;
+	text-transform: uppercase;
+}
+
+.button{
+	padding: 5px 10px;
+	background-color: #e7e7e7;
+	border: none;
+	border-radius: 10px;
+	transition: .2s;
+	cursor: pointer;
+}
+
+.button:hover{
+	background-color: #cae1bb;
+	box-shadow: 0 0 5px 2px #00000017;
+	transition: .2s;
+}
+
+.input{
+	width: 100%;
+	border: 2px solid #e7e7e7;
+	border-radius: 10px;
+	outline: none;
+	margin-right: 10px;
+	padding: 7px 10px;
+	font-size: 18px;
 }

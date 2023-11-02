@@ -1,25 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.css'
+import TodoListsContainer from "./components/TodoList/TodoListContainer";
+import TodoTaskContainer from "./components/TodoTask/TodoTaskContainer";
+import AuthContainer from "./components/Auth/AuthContainer";
+import Form from "./components/Auth/Form/Form";
+import c from "./components/Auth/AuthContainer.module.css";
+import React from "react";
+import Locked from "./components/Locked/Locked";
+import {connect} from "react-redux";
+import {getIsAuth} from "./redux/auth-selectors";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App = ({isAuth}) => {
+   if (!isAuth) {
+      return (
+         <section className='App'>
+            <div className='container'>
+               <Locked/>
+               <TodoListsContainer/>
+               <TodoTaskContainer/>
+            </div>
+            <AuthContainer/>
+         </section>
+      )
+   } else {
+      return (
+         <section className='App'>
+            <div className='container'>
+               <TodoListsContainer/>
+               <TodoTaskContainer/>
+            </div>
+            <AuthContainer/>
+         </section>
+      )
+   }
+};
+
+const mapStateToProps = (state) => {
+   return {
+      isAuth: getIsAuth(state),
+   }
 }
 
-export default App;
+export default connect(mapStateToProps,{})(App)
