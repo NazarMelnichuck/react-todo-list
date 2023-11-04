@@ -1,38 +1,66 @@
-import React, {useState} from 'react';
+import React, from 'react';
 import c from "../AuthContainer.module.css";
+import {useFormik} from "formik";
 
-const Form = ({logInTC}) => {
-   const [emailValue, setEmailValue] = useState('');
-   const [passwordValue, setPasswordValue] = useState('')
+const validate = values => {
+   const errors = {};
 
-   const logIn = (e) => {
-      e.preventDefault()
-      logInTC(emailValue, passwordValue)
-      setEmailValue('')
-      setPasswordValue('')
+   if (!values.email) {
+      errors.email = 'Required';
+   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+      errors.email = 'Invalid email address';
    }
 
-   return (
-      <form className={c.form}>
-         <label className={c.label}>
-            <h3 className={c.labelText}>Email</h3>
-            <input className='input'
-                   onChange={(e) => setEmailValue(e.target.value)}
-                   value={emailValue}
-                   type='email'
-                   placeholder={'Email'}
-            />
-         </label>
-         <label className={c.label}>
-            <h3 className={c.labelText}>Password</h3>
-            <input className='input'
-                   onChange={(e) => setPasswordValue(e.target.value)}
-                   value={passwordValue}
-                   type='password'
-                   placeholder={'Password'}
-            />
-         </label>
+   if (!values.password) {
+      errors.password = 'Required';
+   }
 
+   return errors;
+};
+
+const Form = ({logInTC}) => {
+   const logIn = (e) => {
+      e.preventDefault()
+      logInTC(formik.values.email, formik.values.password)
+   }
+
+   const formik = useFormik({
+      initialValues: {
+         email: '',
+         password: '',
+      },
+      validate,
+   });
+
+   return (
+      <form className={c.form} onSubmit={formik.handleSubmit}>
+         <div className={c.inputBox}>
+            <label className={c.labelText} htmlFor="email">Your email</label>
+            <input
+               id="email"
+               className={'input ' + (formik.touched.email && formik.errors.email ? c.inputError : '')}
+               type="email"
+               onChange={formik.handleChange}
+               onBlur={formik.handleBlur}
+               value={formik.values.email}
+               placeholder={'Email'}
+            />
+            {formik.touched.email && formik.errors.email === 'Invalid email address' ? (
+               <div className={c.errorText}>{formik.errors.email}</div>
+            ) : null}
+         </div>
+         <div className={c.inputBox}>
+            <label className={c.labelText} htmlFor="password">Password</label>
+            <input
+               id="password"
+               className={'input ' + (formik.touched.password && formik.errors.password ? c.inputError : '')}
+               type="password"
+               onChange={formik.handleChange}
+               onBlur={formik.handleBlur}
+               value={formik.values.password}
+               placeholder={'Password'}
+            />
+         </div>
          <button className='button' onClick={logIn}>Login</button>
       </form>
    );

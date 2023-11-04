@@ -14,13 +14,13 @@
     flex-direction: column;
 }
 
-.label{
+.inputBox{
     margin-bottom: 15px;
 }
 
 .labelText{
     font-size: 24px;
-    margin-bottom: 10px;
+    font-weight: 500;
 }
 
 .userInfo{
@@ -48,4 +48,8 @@
 
 .errorText{
     color: red;
+}
+
+.inputError{
+    border: 2px solid red;
 }
