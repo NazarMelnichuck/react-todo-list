@@ -5,3 +5,7 @@ export const getIsAuth = (state) => {
 export const getUserData = (state) => {
    return state.auth.userData
 }
+
+export const getErrors = (state) => {
+   return state.auth.errors
+}

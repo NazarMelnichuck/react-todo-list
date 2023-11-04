@@ -3,9 +3,11 @@ import {authAPI} from "../api/api";
 const IS_AUTH = 'IS_AUTH'
 const LOG_IN = 'LOG_IN'
 const LOG_OUT = 'LOG_OUT'
+const SET_ERRORS = 'SET_ERRORS'
 
 const initialState = {
    isAuth: null,
+   errors: [],
    userData: {
       id: null,
       login: null,
@@ -42,6 +44,12 @@ const authReducer = (state = initialState, action) => {
                email:null,
             }
          }
+      case SET_ERRORS:
+         debugger
+         return {
+            ...state,
+            errors: [...state.errors, action.errors]
+         }
       default:
          return state
    }
@@ -57,6 +65,10 @@ export const logInAC = (data) => {
 
 export const logOutAC = (data) => {
    return {type: LOG_OUT, data}
+}
+
+export const setErrorsAC = (message) => {
+   return {type: SET_ERRORS, errors: message}
 }
 
 // ====== Thunks
@@ -76,8 +88,16 @@ export const logInTC = (email, password) => {
       authAPI.logIn(email, password).then(data => {
          if (data.resultCode === 0) {
             dispatch(logInAC(data.data))
-         } else {
-            alert('Server error!')
+         } else if (data.resultCode === 1){
+            if (data.messages){
+               data.messages.forEach(message => {
+                  if (message === 'Incorrect Email or Password'){
+                     dispatch(setErrorsAC(message))
+                  }
+               })
+            }
+         } else if (data.resultCode === 10){
+            alert('captcha')
          }
       })
    }

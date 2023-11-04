@@ -3,7 +3,7 @@ import c from './AuthContainer.module.css'
 import {connect} from "react-redux";
 import Form from "./Form/Form";
 import {isAuthTC, logInTC, logOutTC} from "../../redux/auth-reducer";
-import {getIsAuth, getUserData} from "../../redux/auth-selectors";
+import {getErrors, getIsAuth, getUserData} from "../../redux/auth-selectors";
 
 const AuthContainer = (props) => {
    useEffect(() => {
@@ -21,6 +21,9 @@ const AuthContainer = (props) => {
             <div>
                <h1 className='block-title'>Login</h1>
                <Form logInTC={props.logInTC}/>
+               {
+                  props.errors ? props.errors.map(e => <p className={c.errorText}>{e}</p>) : null
+               }
             </div>
          ) : (
             <div>
@@ -45,7 +48,8 @@ const AuthContainer = (props) => {
 const mapStateToProps = (state) => {
    return {
       isAuth: getIsAuth(state),
-      userData: getUserData(state)
+      userData: getUserData(state),
+      errors: getErrors(state)
    }
 }
 
